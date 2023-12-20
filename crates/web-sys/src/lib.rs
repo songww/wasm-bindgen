@@ -31,5 +31,6 @@ pub use wasm_bindgen;
 pub fn window() -> Option<Window> {
     use wasm_bindgen::JsCast;
 
-    js_sys::global().dyn_into::<Window>().ok()
+    let global = js_sys::global();
+    js_sys::Reflect::get(&global, &JsValue::from_str("window")).and_then(JsCast::dyn_into).ok()
 }
